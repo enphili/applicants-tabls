@@ -1,0 +1,109 @@
+@media only screen and (max-width: 365px)
+  body
+    padding-bottom: 12px
+  .container
+    padding: 0 12px
+  .main-title
+    margin-top: 20px
+    margin-bottom: 16px
+  .sheet
+    &-header
+      display: none
+    &-row
+      grid-template-columns: 1fr 1fr
+      grid-template-rows: repeat(7, minmax(33px, 50px))
+      & > div
+        &:nth-child(odd)
+          padding: 8px 0 8px 12px
+        &:nth-child(even)
+          padding: 8px 12px 8px 2px
+    &-content
+      border-radius: 0
+      cursor: auto
+      line-height: 17px
+      &__progress-bar
+        & svg
+          display: none
+        & > div, label, progress
+          display: inline-block
+      &:hover
+        border: none
+        & > div
+          border: none
+          border-bottom: 1px solid $blue-light
+          background: #fff
+          &:first-child
+            border: none
+            border-bottom: 1px solid $blue-light
+      & > div
+        @include flex-ali-cent
+        border: none
+        border-bottom: 1px solid $blue-light
+        &:first-child
+          border-radius: 0
+      &__media-caption
+        display: block
+    &__sheet-content
+      margin-bottom: 8px
+  .media-caption
+    font-size: 12px
+    font-weight: 700
+    color: $medium
+  .progress-bar
+    &--orange
+      &::-webkit-progress-value
+        background: $orange
+      &::-moz-progress-bar
+        background: $orange
+    &--red
+      &::-webkit-progress-value
+        background: $red
+      &::-moz-progress-bar
+        background: $red
+    &--green
+      &::-webkit-progress-value
+        background: $green
+      &::-moz-progress-bar
+        background: $green
+    & progress
+      appearance: none
+      -webkit-appearance: none
+      border: none
+      border-radius: 2px
+      width: 80%
+      height: 4px
+      overflow: hidden
+      background: $blue-light
+      box-shadow: none
+      outline: none
+      &::-webkit-progress-bar
+        background: $blue-light
+    & label
+      margin-right: 11px
+  .filter-wrapper
+    display: grid
+    grid-template-columns: 1fr 12px 44px 4px 44px
+    margin-bottom: 8px
+  .sort-btn
+    @include flex-ali-cent
+    justify-content: center
+    width: $slider-height
+    height: $slider-height
+    border: 1px solid $accent
+    border-radius: 2px
+    cursor: pointer
+    & svg
+      transform: rotate(180deg)
+      transition: $transition
+    &--active
+      background: $accent
+      & svg
+        transform: rotate(0deg)
+        transition: $transition
+        & path
+          transition: $transition
+          &:nth-child(1)
+            fill: #fff
+          &:nth-child(2)
+            stroke: #fff
+            fill: #fff
