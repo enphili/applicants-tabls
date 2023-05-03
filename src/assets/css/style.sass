@@ -64,3 +64,48 @@ body
     width: 100%
     height: 100%
     object-fit: cover
+.main-title
+  margin-top: 48px
+  margin-bottom: 20px
+  font-weight: 800
+  font-size: 32px
+  line-height: 39px
+.search-wrapper
+  position: relative
+  margin-bottom: 24px
+  &__glyphicon
+    position: absolute
+    left: 16px
+    top: calc(50% - 15px/2)
+.glyphicon
+  width: 14px
+  height: 15px
+  pointer-events: none
+.search-input
+  -webkit-appearance: none
+  display: block
+  width: 100%
+  height: 52px
+  padding: 0 0 0 38px
+  font-size: 16px
+  line-height: 19
+  color: $black
+  border: 1px solid $blue-light
+  border-radius: 4px
+  outline: none
+  transition: $transition
+  &::placeholder
+    font-size: 16px
+    line-height: 19
+    color: $medium
+  &:hover
+    border-color: $blue05
+  &:focus
+    border-color: $accent
+  &::-webkit-search-cancel-button
+    -webkit-appearance: none
+    width: 17px
+    height: 16px
+    background: url("@/assets/img/close-btn.svg")
+    margin-right: 10px
+    cursor: pointer
