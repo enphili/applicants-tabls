@@ -491,4 +491,8 @@ body {
   stroke: #FF0000;
 }
 
+.filter-wrapper {
+  display: none;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,16 @@
+<template>
+  <div class="filter-wrapper__sort-btn sort-btn sort-btn--active">
+    <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.5 8L7 4L4.76995e-08 4L3.5 8Z" fill="#006CFE"/>
+      <path d="M3.5 0L3.5 4" stroke="#006CFE" stroke-width="2"/>
+    </svg>
+  </div>
+</template>
+
+<script lang="ts">
+import {defineComponent} from 'vue'
+
+export default defineComponent({
+  name: "AppSortButton"
+})
+</script>
