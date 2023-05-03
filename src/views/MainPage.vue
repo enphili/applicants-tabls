@@ -7,6 +7,8 @@
 
       <app-search/>
 
+      <the-table/>
+
     </div>
   </div>
 </template>
@@ -15,11 +17,12 @@
 import Vue from 'vue'
 import TheHeader from '@/components/TheHeader.vue'
 import AppSearch from '@/components/ui/AppSearch.vue'
+import TheTable from '@/components/TheTable.vue'
 
 export default Vue.extend({
   name: 'MainPage',
   components: {
-    TheHeader, AppSearch,
+    TheHeader, AppSearch, TheTable,
   },
 })
 </script>

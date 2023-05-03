@@ -109,3 +109,118 @@ body
     background: url("@/assets/img/close-btn.svg")
     margin-right: 10px
     cursor: pointer
+.sheet
+  overflow-x: scroll
+  scrollbar-width: thin
+  scrollbar-color: $blue-light transparent
+  &::-webkit-scrollbar
+    width: 6px
+    background-color: transparent
+  &::-webkit-scrollbar-track
+    background: transparent
+  &::-webkit-scrollbar-thumb
+    background-color: $blue-light
+    border-radius: 6px
+    border: none
+    &:hover
+      cursor: pointer
+      border-color: $blue05
+  &__sheet
+    &-header
+      margin-bottom: 10px
+    &-content
+      margin-bottom: 4px
+  &-row
+    display: grid
+    grid-template-columns: $sheet-row
+    & > div
+      padding: 0 20px
+  &-content
+    line-height: 64px
+    border-radius: 4px
+    transition: $transition
+    cursor: pointer
+    &__media-caption
+      display: none
+    &:hover
+      border-color: $blue-light
+      & > div
+        background: transparent
+        border-top: 1px solid $blue-light
+        border-bottom: 1px solid $blue-light
+        &:first-child
+          border-left: 1px solid $blue-light
+    & > div
+      background: #fff
+      border: 1px solid $blue-super-light
+      border-right-color: $blue-light
+      &:first-child
+        border-top-left-radius: 4px
+        border-bottom-left-radius: 4px
+      &:last-child
+        border-top-right-radius: 4px
+        border-bottom-right-radius: 4px
+        @include flex-ali-cent
+        justify-content: center
+        & svg
+          height: 40px
+          width: 40px
+    &--score
+      font-weight: 700
+    &--green
+      color: $green
+    &--orange
+      color: $orange
+    &--red
+      color: $red
+    &__progress-bar
+      & svg
+        transform: rotate(-90deg)
+        & circle:first-child
+          stroke: $blue-light
+        & text
+          font-size: 14px
+          fill: $black
+          transform: rotate(90deg)
+      & > div, label, progress
+        display: none
+    &__sheet-header
+      margin-bottom: 8px
+    &__sheet-content
+      margin-bottom: 4px
+  &-header
+    border: 1px solid transparent
+    font-size: 12px
+    font-weight: 700
+    line-height: 15px
+    color: $accent
+    &--arrow-up
+      transform: rotate(180deg)
+    &--arrow-hidden
+      & svg
+        display: none
+    & > div
+      @include flex-ali-cent
+      cursor: pointer
+      transition: $transition
+      & > div
+        margin-left: 2px
+        width: 7px
+      &:hover
+        color: $accent-dark
+        & > div
+          & svg
+            & path
+              transition: $transition
+              &:nth-child(1)
+                fill: $accent-dark
+              &:nth-child(2)
+                stroke: $accent-dark
+                fill: $accent-dark
+.stroke
+  &-green
+    stroke: $green
+  &-orange
+    stroke: $orange
+  &-red
+    stroke: $red
