@@ -12,11 +12,19 @@
 
         <div></div>
 
-        <app-sort-button/>
+        <app-sort-button
+          direction="down"
+          :is-active="isActiveDown"
+          @click.native="sortDown"
+        ></app-sort-button>
 
         <div></div>
 
-        <app-sort-button/>
+        <app-sort-button
+          direction="up"
+          :is-active="isActiveUp"
+          @click.native="sortUp"
+        ></app-sort-button>
       </div>
 
       <the-table/>
@@ -26,19 +34,39 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {defineComponent} from 'vue'
 import TheHeader from '@/components/TheHeader.vue'
 import AppSearch from '@/components/ui/AppSearch.vue'
 import TheTable from '@/components/TheTable.vue'
 import AppSortButton from '@/components/ui/AppSortButton.vue'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'MainPage',
+
+  data() {
+    return {
+      isActiveDown: false,
+      isActiveUp: false
+    }
+  },
+
+  methods: {
+    sortDown() {
+      this.isActiveDown = true
+      this.isActiveUp = false
+    },
+
+    sortUp() {
+      this.isActiveUp = true
+      this.isActiveDown = false
+    }
+  },
+
   components: {
     TheHeader,
     AppSearch,
     TheTable,
     AppSortButton,
-  },
+  }
 })
 </script>

@@ -626,14 +626,9 @@ body {
   }
   .sort-btn svg {
     transform: rotate(180deg);
-    transition: all 0.3s ease;
   }
   .sort-btn--active {
     background: #006CFE;
-  }
-  .sort-btn--active svg {
-    transform: rotate(0deg);
-    transition: all 0.3s ease;
   }
   .sort-btn--active svg path {
     transition: all 0.3s ease;
@@ -644,6 +639,12 @@ body {
   .sort-btn--active svg path:nth-child(2) {
     stroke: #fff;
     fill: #fff;
+  }
+  .direction-down svg {
+    transform: rotate(0deg);
+  }
+  .direction-up svg {
+    transform: rotate(180deg);
   }
 }
 

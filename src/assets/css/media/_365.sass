@@ -94,12 +94,9 @@
     cursor: pointer
     & svg
       transform: rotate(180deg)
-      transition: $transition
     &--active
       background: $accent
       & svg
-        transform: rotate(0deg)
-        transition: $transition
         & path
           transition: $transition
           &:nth-child(1)
@@ -107,3 +104,9 @@
           &:nth-child(2)
             stroke: #fff
             fill: #fff
+  .direction-down
+    svg
+      transform: rotate(0deg)
+  .direction-up
+    svg
+      transform: rotate(180deg)
