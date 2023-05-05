@@ -35,12 +35,20 @@
           &:first-child
             border: none
             border-bottom: 1px solid $blue-light
+          &:nth-child(2)
+            border-left: none
       & > div
         @include flex-ali-cent
         border: none
         border-bottom: 1px solid $blue-light
         &:first-child
           border-radius: 0
+        &:nth-child(2)
+          border-top-left-radius: 0
+          border-bottom-left-radius: 0
+        &:last-child
+          border-top-right-radius: 0
+          border-bottom-right-radius: 0
       &__media-caption
         display: block
     &__sheet-content

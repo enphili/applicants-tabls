@@ -1,103 +1,113 @@
 <template>
-  <main class="sheet">
-    <div class="sheet-row sheet__sheet-header sheet-header">
-      <div>ФИО
-        <div class="sheet-header--arrow-down">
-          <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.5 8L7 4L4.76995e-08 4L3.5 8Z" fill="#006CFE"/>
-            <path d="M3.5 0L3.5 4" stroke="#006CFE" stroke-width="2"/>
-          </svg>
-        </div>
+    <div
+      class="sheet-row sheet__sheet-content sheet-content"
+      @click="clickHandler(student?.name)"
+    >
+      <div v-if="is360" class="sheet-content__media-caption media-caption">ФИО</div>
+      <div>{{ student?.name }}</div>
+
+      <div v-if="is360" class="sheet-content__media-caption media-caption">Дата подачи заявления</div>
+      <div>{{ student?.date }}</div>
+
+      <div v-if="is360" class="sheet-content__media-caption media-caption">Балл по русскому</div>
+      <div
+        :class="['sheet-content--score', `${getScoreColor(student?.subjects?.[0].score ?? 0)}`]"
+      >
+        {{ student.subjects?.[0]?.subIndex === 0 ? student.subjects[0]?.score : '' }}
       </div>
-      <div>Дата подачи заявления
-        <div class="sheet-header--arrow-up">
-          <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.5 8L7 4L4.76995e-08 4L3.5 8Z" fill="#006CFE"/>
-            <path d="M3.5 0L3.5 4" stroke="#006CFE" stroke-width="2"/>
-          </svg>
-        </div>
+
+      <div v-if="is360" class="sheet-content__media-caption media-caption">Балл по математике</div>
+      <div
+        :class="['sheet-content--score', `${getScoreColor(student?.subjects?.[1].score ?? 0)}`]"
+      >
+        {{ student.subjects?.[1]?.subIndex === 1 ? student.subjects[1]?.score : '' }}
       </div>
-      <div>Балл по русскому
-        <div class="sheet-header--arrow-hidden">
-          <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.5 8L7 4L4.76995e-08 4L3.5 8Z" fill="#006CFE"/>
-            <path d="M3.5 0L3.5 4" stroke="#006CFE" stroke-width="2"/>
-          </svg>
-        </div>
+
+      <div v-if="is360" class="sheet-content__media-caption media-caption">Балл по информатике</div>
+      <div
+        :class="['sheet-content--score', `${getScoreColor(student?.subjects?.[2].score ?? 0)}`]"
+      >
+        {{ student.subjects?.[2]?.subIndex === 2 ? student.subjects[2]?.score : '' }}
       </div>
-      <div>Балл по математике
-        <div class="sheet-header--arrow-down">
-          <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.5 8L7 4L4.76995e-08 4L3.5 8Z" fill="#006CFE"/>
-            <path d="M3.5 0L3.5 4" stroke="#006CFE" stroke-width="2"/>
-          </svg>
-        </div>
+
+      <div v-if="is360" class="sheet-content__media-caption media-caption">Суммарный балл</div>
+      <div class="sheet-content--score sheet-content--green">
+        {{ getTotalScore() }}
       </div>
-      <div>Балл по информатике
-        <div class="sheet-header--arrow-down">
-          <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.5 8L7 4L4.76995e-08 4L3.5 8Z" fill="#006CFE"/>
-            <path d="M3.5 0L3.5 4" stroke="#006CFE" stroke-width="2"/>
-          </svg>
-        </div>
-      </div>
-      <div>Суммарный балл
-        <div class="sheet-header--arrow-down">
-          <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.5 8L7 4L4.76995e-08 4L3.5 8Z" fill="#006CFE"/>
-            <path d="M3.5 0L3.5 4" stroke="#006CFE" stroke-width="2"/>
-          </svg>
-        </div>
-      </div>
-      <div>Процент
-        <div class="sheet-header--arrow-down">
-          <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.5 8L7 4L4.76995e-08 4L3.5 8Z" fill="#006CFE"/>
-            <path d="M3.5 0L3.5 4" stroke="#006CFE" stroke-width="2"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-    <div class="sheet-row sheet__sheet-content sheet-content">
-      <div class="sheet-content__media-caption media-caption">ФИО</div>
-      <div>Иванов Иван Иванович</div>
-      <div class="sheet-content__media-caption media-caption">Дата подачи заявления</div>
-      <div>03.04.2023</div>
-      <div class="sheet-content__media-caption media-caption">Балл по русскому</div>
-      <div class="sheet-content--score sheet-content--green">4.8</div>
-      <div class="sheet-content__media-caption media-caption">Балл по математике</div>
-      <div class="sheet-content--score sheet-content--orange">3.6</div>
-      <div class="sheet-content__media-caption media-caption">Балл по информатике</div>
-      <div class="sheet-content--score sheet-content--red">4.8</div>
-      <div class="sheet-content__media-caption media-caption">Суммарный балл</div>
-      <div class="sheet-content--score sheet-content--green">12.8</div>
-      <div class="sheet-content__media-caption media-caption">Процент</div>
+
+      <div v-if="is360" class="sheet-content__media-caption media-caption">Процент</div>
       <div class="sheet-content__progress-bar progress-bar">
         <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
-          <circle r="20" cx="22" cy="22" stroke-width="1" stroke="black"/>
+          <circle r="20" cx="22" cy="22" stroke-width="1"/>
           <circle
-            class="stroke-green"
+            :class="`${ getPercentColor(true, percent()) }`"
             r="20"
             cx="22"
             cy="22"
             stroke-width="3"
             stroke-linecap="round"
-            stroke-dasharray="94.2"
-            stroke-dashoffset="0"
+            :stroke-dasharray="`${ 2 * Math.PI * 20 }`"
+            :stroke-dashoffset="`${ 2 * Math.PI * 20 * ((100 - percent()) / 100) }`"
           />
-          <text x="22" y="-16" text-anchor="middle">100%</text>
+          <text x="22" y="-16" text-anchor="middle">{{ percent() }}%</text>
         </svg>
-        <label for="progress-bar">50%</label>
-        <progress class="progress-bar--orange" id="progress-bar" value="50" max="100">50 %</progress>
+          <label for="progress-bar">{{ percent() }}%</label>
+          <progress
+            :class="`${ getPercentColor(false, percent()) }`"
+            id="progress-bar"
+            :value="percent()" max="100"
+          >{{ percent() }}%</progress>
       </div>
     </div>
-  </main>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {defineComponent, PropType} from 'vue'
+import {IStudent} from '@/model/types'
+import {useTotalScore} from '@/use/totalScore'
 
 export default defineComponent({
-  name: "TheTable"
+  name: "TheTable",
+
+  props: {
+    student: Object as PropType<IStudent>,
+    is360: Boolean
+  },
+
+  data() {
+    return {
+      maxTotalScore: 15
+    }
+  },
+
+  methods: {
+    getScoreColor(score: number): string {
+      if (score < 3) return 'sheet-content--red'
+      if (score >= 3 && score < 4) return 'sheet-content--orange'
+      return 'sheet-content--green'
+    },
+
+    getTotalScore(): number {
+      const scoreArray = this.student?.subjects?.map(el => el.score)
+      if (scoreArray) {
+        return useTotalScore(...scoreArray)
+      }
+      return 0
+    },
+
+    percent(): number {
+      return Math.round(this.getTotalScore() * 100 / this.maxTotalScore)
+    },
+
+    getPercentColor(isSvg: boolean, percent: number): string {
+      if (percent <= 25) return isSvg ? 'stroke-red' : 'progress-bar--red'
+      if (percent > 25 && percent <= 50) return isSvg ? 'stroke-orange' : 'progress-bar--orange'
+      return isSvg ? 'stroke-green' : 'progress-bar--green'
+    },
+
+    clickHandler(studentName: string = '') {
+      console.log(`do something with the student: ${studentName}`)
+    }
+  },
 })
 </script>

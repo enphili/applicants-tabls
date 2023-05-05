@@ -110,6 +110,7 @@ body
     margin-right: 10px
     cursor: pointer
 .sheet
+  position: relative
   overflow-x: scroll
   scrollbar-width: thin
   scrollbar-color: $blue-light transparent
@@ -137,7 +138,6 @@ body
       padding: 0 20px
   &-content
     line-height: 64px
-    border-radius: 4px
     transition: $transition
     cursor: pointer
     &__media-caption
@@ -148,13 +148,13 @@ body
         background: transparent
         border-top: 1px solid $blue-light
         border-bottom: 1px solid $blue-light
-        &:first-child
+        &:nth-child(2)
           border-left: 1px solid $blue-light
     & > div
       background: #fff
       border: 1px solid $blue-super-light
       border-right-color: $blue-light
-      &:first-child
+      &:nth-child(2)
         border-top-left-radius: 4px
         border-bottom-left-radius: 4px
       &:last-child
