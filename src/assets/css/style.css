@@ -658,6 +658,112 @@ body {
   .direction-up svg {
     transform: rotate(180deg);
   }
+  .select {
+    width: 100%;
+    position: relative;
+    z-index: 72;
+  }
+  .select.open .select__dropdown {
+    display: block;
+  }
+  .select.open .select__input {
+    border-bottom: none;
+  }
+  .select.open .select__backdrop {
+    display: block;
+  }
+  .select__input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 44px;
+    padding: 0 1rem;
+    border: 1px solid #D5E7FF;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .select__input-views {
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+  }
+  .select__input span:first-child {
+    color: #8D9FB7;
+  }
+  .select__input span:last-child {
+    color: #1C1D1F;
+  }
+  .select__input img {
+    user-select: none;
+  }
+  .select__input.selected span:first-child {
+    color: #8D9FB7;
+  }
+  .select__input.selected span:last-child {
+    color: #1C1D1F;
+  }
+  .select__dropdown {
+    display: none;
+    position: absolute;
+    border: 1px solid #D5E7FF;
+    border-radius: 4px;
+    top: 48px;
+    left: 0;
+    right: 0;
+    overflow-y: auto;
+  }
+  .select__list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background: #fff;
+  }
+  .select__backdrop {
+    position: fixed;
+    display: none;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+  }
+  .select__item {
+    padding: 9.5px 12px;
+  }
+  .select__item:not(:last-child) {
+    border-bottom: 1px solid #D5E7FF;
+  }
+  .select__item.selected {
+    background-color: #EDF5FF;
+  }
+  .select__item:hover {
+    background-color: #EDF5FF;
+    cursor: pointer;
+    transition: 0.15s background-color ease-in;
+  }
+  .select .select-arrow-up {
+    transform: rotate(180deg);
+    transition: 0.1s ease-in;
+  }
+  .select .select-arrow-down {
+    transform: rotate(0deg);
+    transition: 0.1s ease-in;
+  }
+}
+.placeholder {
+  font-size: 11px;
+  line-height: 13px;
+}
+
+@media only screen and (max-width: 346px) {
+  .select__input span:first-child {
+    font-size: 11px;
+  }
+  .select__input span:last-child {
+    font-size: 11px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

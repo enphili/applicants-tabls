@@ -10,3 +10,8 @@ export interface IStudent {
   date: string,
   subjects: ISubject[]
 }
+
+export interface ISelectData {
+  id: number | string,
+  value: string
+}

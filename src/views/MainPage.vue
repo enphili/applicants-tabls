@@ -8,7 +8,11 @@
       <app-search/>
 
       <div class="filter-wrapper">
-        <div>select</div>
+
+        <app-select
+          placeholder="Сортировать по"
+          :data="selectValues"
+        />
 
         <div></div>
 
@@ -110,6 +114,7 @@ import AppSearch from '@/components/ui/AppSearch.vue'
 import TheTable from '@/components/TheTable.vue'
 import AppSortButton from '@/components/ui/AppSortButton.vue'
 import TheLoader from '@/components/TheLoader.vue'
+import AppSelect from '@/components/ui/AppSelect.vue'
 
 export default defineComponent({
   name: 'MainPage',
@@ -119,7 +124,16 @@ export default defineComponent({
       isActiveDown: false,
       isActiveUp: false,
       loader: false,
-      isWindowsWidthMobile: false
+      isWindowsWidthMobile: window.innerWidth <= 365,
+      selectValues: [
+        {id: '1', value: 'ФИО'},
+        {id: '2', value: 'Дата подачи заявления'},
+        {id: '3', value: 'Балл по русскому'},
+        {id: '4', value: 'Балл по математике'},
+        {id: '5', value: 'Балл по информатике'},
+        {id: '6', value: 'Суммарный балл'},
+        {id: '7', value: 'Процент'}
+      ]
     }
   },
 
@@ -135,7 +149,7 @@ export default defineComponent({
     },
 
     onResize() {
-      if (window.innerWidth <= 365) this.isWindowsWidthMobile = true
+      this.isWindowsWidthMobile = window.innerWidth <= 365
     },
   },
 
@@ -161,7 +175,8 @@ export default defineComponent({
     AppSearch,
     TheTable,
     AppSortButton,
-    TheLoader
+    TheLoader,
+    AppSelect
   }
 })
 </script>
