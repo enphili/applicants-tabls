@@ -389,7 +389,7 @@ body {
   border-top: 1px solid #D5E7FF;
   border-bottom: 1px solid #D5E7FF;
 }
-.sheet-content:hover > div:nth-child(2) {
+.sheet-content:hover > div:nth-child(1), .sheet-content:hover > div:nth-child(2) {
   border-left: 1px solid #D5E7FF;
 }
 .sheet-content > div {
@@ -397,7 +397,7 @@ body {
   border: 1px solid #EDF5FF;
   border-right-color: #D5E7FF;
 }
-.sheet-content > div:nth-child(2) {
+.sheet-content > div:nth-child(1), .sheet-content > div:nth-child(2) {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }

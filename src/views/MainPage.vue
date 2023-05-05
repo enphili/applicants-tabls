@@ -136,7 +136,7 @@ export default defineComponent({
 
     onResize() {
       if (window.innerWidth <= 365) this.isWindowsWidthMobile = true
-    }
+    },
   },
 
   async mounted() {
