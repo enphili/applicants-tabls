@@ -9,9 +9,11 @@
           </div>
           <p class="logo-wrapper__logo-text logo-text">Система таблиц</p>
         </header>
-        <div class="header__user-wrapper user-wrapper">
+        <div class="header__user-wrapper user-wrapper"
+             @click="userLogin"
+        >
           <div class="user-wrapper__user-text user-text">
-            <p class="user-text__user-name user-name">Светлана</p>
+            <p class="user-text__user-name user-name">{{ userName }}</p>
             <p class="user-text__user-role user-role">Сотрудник</p>
           </div>
           <div class="user-wrapper__user-photo user-photo">
@@ -29,6 +31,18 @@ import {defineComponent} from 'vue'
 
 export default defineComponent({
   name: "TheHeader",
+
+  data() {
+    return {
+      userName: 'Светлана'
+    }
+  },
+
+  methods: {
+    userLogin() {
+      console.log(this.userName)
+    }
+  }
 
 })
 </script>
