@@ -13,21 +13,21 @@
       <div
         :class="['sheet-content--score', `${getScoreColor(student?.subjects?.[0].score ?? 0)}`]"
       >
-        {{ student.subjects?.[0]?.subIndex === 0 ? student.subjects[0]?.score : '' }}
+        {{ student.subjects?.[0]?.subIndex === 0 ? student.subjects[0]?.score : 0 }}
       </div>
 
       <div v-if="is360" class="sheet-content__media-caption media-caption">Балл по математике</div>
       <div
         :class="['sheet-content--score', `${getScoreColor(student?.subjects?.[1].score ?? 0)}`]"
       >
-        {{ student.subjects?.[1]?.subIndex === 1 ? student.subjects[1]?.score : '' }}
+        {{ student.subjects?.[1]?.subIndex === 1 ? student.subjects[1]?.score : 0 }}
       </div>
 
       <div v-if="is360" class="sheet-content__media-caption media-caption">Балл по информатике</div>
       <div
         :class="['sheet-content--score', `${getScoreColor(student?.subjects?.[2].score ?? 0)}`]"
       >
-        {{ student.subjects?.[2]?.subIndex === 2 ? student.subjects[2]?.score : '' }}
+        {{ student.subjects?.[2]?.subIndex === 2 ? student.subjects[2]?.score : 0 }}
       </div>
 
       <div v-if="is360" class="sheet-content__media-caption media-caption">Суммарный балл</div>
@@ -40,23 +40,23 @@
         <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
           <circle r="20" cx="22" cy="22" stroke-width="1"/>
           <circle
-            :class="`${ getPercentColor(true, percent()) }`"
+            :class="`${ getPercentColor(true, percent) }`"
             r="20"
             cx="22"
             cy="22"
             stroke-width="3"
             stroke-linecap="round"
             :stroke-dasharray="`${ 2 * Math.PI * 20 }`"
-            :stroke-dashoffset="`${ 2 * Math.PI * 20 * ((100 - percent()) / 100) }`"
+            :stroke-dashoffset="`${ 2 * Math.PI * 20 * ((100 - percent) / 100) }`"
           />
-          <text x="22" y="-16" text-anchor="middle">{{ percent() }}%</text>
+          <text x="22" y="-16" text-anchor="middle">{{ percent }}%</text>
         </svg>
-          <label for="progress-bar">{{ percent() }}%</label>
+          <label for="progress-bar">{{ percent }}%</label>
           <progress
-            :class="`${ getPercentColor(false, percent()) }`"
+            :class="`${ getPercentColor(false, percent) }`"
             id="progress-bar"
-            :value="percent()" max="100"
-          >{{ percent() }}%</progress>
+            :value="percent" max="100"
+          >{{ percent }}%</progress>
       </div>
     </div>
 </template>
@@ -95,9 +95,9 @@ export default defineComponent({
       return 0
     },
 
-    percent(): number {
-      return Math.round(this.getTotalScore() * 100 / this.maxTotalScore)
-    },
+    // percent(): number {
+    //   return Math.round(this.getTotalScore() * 100 / this.maxTotalScore)
+    // },
 
     getPercentColor(isSvg: boolean, percent: number): string {
       if (percent <= 25) return isSvg ? 'stroke-red' : 'progress-bar--red'
@@ -109,5 +109,11 @@ export default defineComponent({
       console.log(`do something with the student: ${studentName}`)
     }
   },
+
+  computed: {
+    percent(): number {
+      return Math.round(this.getTotalScore() * 100 / this.maxTotalScore)
+    }
+  }
 })
 </script>

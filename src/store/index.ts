@@ -32,6 +32,7 @@ export default new Vuex.Store({
           if(fistChar === 'м') subIndex = 1
           if(fistChar === 'и') subIndex = 2
           sub.subIndex = subIndex
+          //FIXME продумать как поступить если нет какого либо предмета из числа по умолчанию
         })
         // отсортируем массив предметов чтобы он всегда был в одном порядке
         el.subjects?.sort((a, b) => a.subIndex - b.subIndex)

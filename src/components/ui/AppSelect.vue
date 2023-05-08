@@ -4,7 +4,7 @@
     <div class="select__input" @click="toggleSelect">
       <div class="select__input-views">
         <span :class="{placeholder: selectValue}">{{ placeholder }}</span>
-        <span>{{ selectValue?.value }}</span>
+        <span>{{ selectText }}</span>
       </div>
       <img
         src="@/assets/img/arrow-down-big.svg"
@@ -17,7 +17,7 @@
         <li
           v-for="item in data"
           :key="item.id"
-          :class="['select__item', {'selected': item.id === selectValue?.id}]"
+          :class="['select__item', {'selected': item.id === selectId}]"
           :data-id="item.id"
           @click="select(item)"
           v-model="selectValue"
@@ -48,15 +48,18 @@ export default defineComponent({
 
   data(): {
     selectValue: null | ISelectData,
-    isOpen: boolean
+    isOpen: boolean,
+    selectId: number | string,
+    selectText: string
   }
   {
     return {
       isOpen: false,
-      selectValue: null
+      selectValue: null,
+      selectId: 0,
+      selectText: ''
     }
   },
-
 
   methods: {
     toggleSelect() {
@@ -70,7 +73,9 @@ export default defineComponent({
     select(item: ISelectData) {
       this.selectValue = item
       this.isOpen = false
-      console.log(this.selectValue.value)
+      this.selectId = item.id
+      this.selectText = item.value
+      console.log('Выбрано значение:', this.selectValue.value)
     }
   }
 })

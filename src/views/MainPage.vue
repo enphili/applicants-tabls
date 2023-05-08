@@ -5,7 +5,11 @@
     <div class="container">
       <h2 class="main-title">Список заявлений</h2>
 
-      <app-search/>
+      <app-search
+        placeholder="Поиск"
+        v-model="searchText"
+        @resetSearch="resetSearch"
+      />
 
       <div class="filter-wrapper">
 
@@ -115,6 +119,7 @@ import TheTable from '@/components/TheTable.vue'
 import AppSortButton from '@/components/ui/AppSortButton.vue'
 import TheLoader from '@/components/TheLoader.vue'
 import AppSelect from '@/components/ui/AppSelect.vue'
+import {IStudent} from '@/model/types'
 
 export default defineComponent({
   name: 'MainPage',
@@ -133,7 +138,8 @@ export default defineComponent({
         {id: '5', value: 'Балл по информатике'},
         {id: '6', value: 'Суммарный балл'},
         {id: '7', value: 'Процент'}
-      ]
+      ],
+      searchText: this.$route.query.s
     }
   },
 
@@ -151,6 +157,10 @@ export default defineComponent({
     onResize() {
       this.isWindowsWidthMobile = window.innerWidth <= 365
     },
+
+    resetSearch() {
+      this.searchText = ''
+    }
   },
 
   async mounted() {
@@ -166,7 +176,25 @@ export default defineComponent({
 
   computed: {
     studentsList() {
-      return this.$store.getters.studentsList
+      return this
+        .$store
+        .getters
+        .studentsList
+        .filter((student: IStudent) => {
+          return this.searchText && typeof this.searchText === 'string'
+            // -> результат, сужающий поиск (поиск "живой")
+            ? student.name.toLowerCase().includes(this.searchText) : true
+            // -> результат, расширяющий поиск по отдельным словам
+          // ? student.name.toLowerCase().split(' ').some(word => this.searchText.includes(word)) : true
+        })
+    }
+  },
+
+  watch: {
+    searchText: function(newVal) {
+      const query: {s?: string} = {}
+      query.s = newVal.toLowerCase().trim()
+      this.$router.replace({query}).catch(() => {})
     }
   },
 

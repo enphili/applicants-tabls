@@ -298,11 +298,22 @@ body {
   left: 16px;
   top: calc(50% - 7.5px);
 }
+.search-wrapper__close-search {
+  position: absolute;
+  right: 16px;
+  top: calc(50% - 10px);
+}
 
 .glyphicon {
   width: 14px;
   height: 15px;
   pointer-events: none;
+}
+
+.close-search {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 
 .search-input {
@@ -329,14 +340,6 @@ body {
 }
 .search-input:focus {
   border-color: #006CFE;
-}
-.search-input::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  width: 17px;
-  height: 16px;
-  background: url("@/assets/img/close-btn.svg");
-  margin-right: 10px;
-  cursor: pointer;
 }
 
 .sheet {
