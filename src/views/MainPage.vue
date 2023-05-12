@@ -24,16 +24,16 @@
 
         <app-sort-button
           direction="down"
-          :is-active="isActiveDown"
-          @click.native="sortTableByButton(true)"
+          :is-active="sortDirection === 'down'"
+          @click.native="sortTableByButton('down')"
         ></app-sort-button>
 
         <div></div>
 
         <app-sort-button
           direction="up"
-          :is-active="isActiveUp"
-          @click.native="sortTableByButton(false)"
+          :is-active="sortDirection === 'up'"
+          @click.native="sortTableByButton('up')"
         ></app-sort-button>
       </div>
 
@@ -44,10 +44,12 @@
         <div v-if="!isWindowsWidthMobile" class="sheet-row sheet__sheet-header sheet-header">
           <app-column-header
             v-for="(header, idx) in Object.keys(ETableHeaders)"
+            :direction="typeof sortDirection === 'string' ? sortDirection : ''"
+            :criterion="typeof sortCriterion === 'string' ? sortCriterion : ''"
             :key="idx"
             :header="header.toLowerCase()"
             :title="ETableHeaders[header]"
-            @click.native="sortTable(header.toLowerCase(), $event)"
+            @click.native="sortTable(header.toLowerCase())"
           ></app-column-header>
         </div>
 
@@ -86,53 +88,41 @@ export default defineComponent({
 
   data() {
     return {
-      isActiveDown: this.$route.query.direction === 'down',
-      isActiveUp: this.$route.query.direction === 'up',
       loader: false,
-      isWindowsWidthMobile: window.innerWidth <= 365,
       ETableHeaders,
+      showNotif: false,
+      isWindowsWidthMobile: window.innerWidth <= 365,
       selectValues: Object.entries(ETableHeaders).map(([key, value]) => ({id: key.toLowerCase(), text: value})),
       searchText: this.$route.query.s,
-      nameSortColumn: this.$route.query.criterion,
-      isDirectionUp: this.$route.query.direction === 'up',
       query: {s: this.$route.query.s, direction: this.$route.query.direction, criterion: this.$route.query.criterion},
-      showNotif: false
+      sortDirection: this.$route.query.direction,
+      sortCriterion: this.$route.query.criterion
     }
   },
 
   methods: {
-    sortTable(header: string, event: Event) {
-      // ...
-      this.nameSortColumn = header
-      this.isDirectionUp = !this.isDirectionUp
-      this.isActiveUp = this.isDirectionUp
-      this.isActiveDown = !this.isDirectionUp
-      const target = event.currentTarget as HTMLElement
-      if (target) {
-        for (const el of target.parentElement?.children ?? []) {
-          el.classList.add('sheet-header--arrow-hidden')
-        }
-        target.classList.remove('sheet-header--arrow-hidden')
-        this.isDirectionUp
-          ? target.classList.add('sheet-header--arrow-up')
-          : target.classList.remove('sheet-header--arrow-up')
+    setSortOptions(direction: string, criterion?: string) {
+      this.sortDirection = direction
+      if (criterion) {
+        this.sortCriterion = criterion
+        this.query.criterion = criterion
       }
-      this.query.direction = this.isDirectionUp ? 'up' : 'down'
-      this.query.criterion = this.nameSortColumn
+      this.query.direction = direction
       const query = this.query
       this.$router.replace({query}).catch(() => {})
+    },
+
+    sortTable(header: string) {
+      const direction = this.sortDirection === 'up' ? 'down' : 'up'
+      this.setSortOptions(direction, header)
     },
 
     selectChoose(value: string) {
-      this.nameSortColumn = value
-      this.isActiveDown = !this.isDirectionUp
-      this.query.direction = this.isDirectionUp ? 'up' : 'down'
-      this.query.criterion = value
-      const query = this.query
-      this.$router.replace({query}).catch(() => {})
+      const direction = typeof this.$route.query.direction === 'string' ? this.$route.query.direction : 'up'
+      this.setSortOptions(direction, value)
     },
 
-    sortTableByButton(indicator: boolean) {
+    sortTableByButton(direction: string) {
       if (!this.$route.query.criterion) {
         this.$store.commit('toastsArray', {
           icon: 'warning',
@@ -142,12 +132,7 @@ export default defineComponent({
         this.showNotif = true
         return
       }
-      this.isActiveDown = indicator
-      this.isActiveUp = !indicator
-      this.isDirectionUp = !indicator
-      this.query.direction = this.isDirectionUp ? 'up' : 'down'
-      const query = this.query
-      this.$router.replace({query}).catch(() => {})
+      this.setSortOptions(direction)
     },
 
     onResize() {
@@ -163,6 +148,9 @@ export default defineComponent({
     this.$nextTick(() => window.addEventListener('resize', this.onResize))
     this.loader = true
     await this.$store.dispatch('getDataFromAPI')
+    if (!this.$route.query.criterion) {
+      this.setSortOptions('up', 'name')
+    }
     this.loader = false
   },
 
@@ -177,28 +165,28 @@ export default defineComponent({
         .getters
         .studentsList
         .sort((a: IStudent, b: IStudent) => {
-          if (typeof this.nameSortColumn !== 'string') return
-          if (this.nameSortColumn === 'name') {
-            if (a[this.nameSortColumn] > b[this.nameSortColumn]) return this.isDirectionUp ? 1 : -1
-            if (a[this.nameSortColumn] < b[this.nameSortColumn]) return this.isDirectionUp ? -1 : 1
+          if (typeof this.sortCriterion !== 'string') return
+          if (this.sortCriterion === 'name') {
+            if (a[this.sortCriterion] > b[this.sortCriterion]) return this.sortDirection === 'up' ? 1 : -1
+            if (a[this.sortCriterion] < b[this.sortCriterion]) return this.sortDirection === 'up' ? -1 : 1
             return 0
           }
-          if (this.nameSortColumn === 'total' || this.nameSortColumn === 'percent') {
-            return this.isDirectionUp
-              ? a[this.nameSortColumn] - b[this.nameSortColumn]
-              : b[this.nameSortColumn] - a[this.nameSortColumn]
+          if (this.sortCriterion === 'total' || this.sortCriterion === 'percent') {
+            return this.sortDirection === 'up'
+              ? a[this.sortCriterion] - b[this.sortCriterion]
+              : b[this.sortCriterion] - a[this.sortCriterion]
           }
-          if (this.nameSortColumn === 'date') {
-            return this.isDirectionUp
-              ? new Date(a[this.nameSortColumn]).getTime() - new Date(b[this.nameSortColumn]).getTime()
-              : new Date(b[this.nameSortColumn]).getTime() - new Date(a[this.nameSortColumn]).getTime()
+          if (this.sortCriterion === 'date') {
+            return this.sortDirection === 'up'
+              ? new Date(a[this.sortCriterion]).getTime() - new Date(b[this.sortCriterion]).getTime()
+              : new Date(b[this.sortCriterion]).getTime() - new Date(a[this.sortCriterion]).getTime()
           }
           else {
             const subjects = ['russcore', 'mathscore', 'informscore']
-            const idx = subjects.indexOf(this.nameSortColumn)
+            const idx = subjects.indexOf(this.sortCriterion)
             const scoresA = a.subjects.map(score => score.score)[idx]
             const scoresB = b.subjects.map(score => score.score)[idx]
-            return this.isDirectionUp ? scoresA - scoresB : scoresB - scoresA
+            return this.sortDirection === 'up' ? scoresA - scoresB : scoresB - scoresA
           }
         })
         .filter((student: IStudent) => {

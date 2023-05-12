@@ -60,10 +60,6 @@ export default new Vuex.Store({
         el.percent = Math.round(el.total * 100 / state.maxTotalScore)
       })
       
-      // отсортируем данные с сервера по ФИО
-      payload.sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name))
-      
-      // мутируем state
       state.studentsList = payload
     },
     

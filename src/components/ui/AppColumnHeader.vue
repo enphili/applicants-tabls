@@ -1,8 +1,6 @@
 <template>
-  <div :class="[
-    isArrowUp ? 'sheet-header--arrow-up' : '',
-    isSorted ? '' : 'sheet-header--arrow-hidden'
-    ]"
+  <div
+    :class="classArrow"
   >{{ title }}
     <div>
       <svg width="7" height="8" viewBox="0 0 7 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,23 +23,17 @@ export default defineComponent({
       required: true
     },
     header: String,
+    direction: String,
+    criterion: String
   },
 
-  data() {
-    return {
-      isSorted: false,
-      isArrowUp: false,
-      direction: this.$route.query.direction,
-      criterion: this.$route.query.criterion
-    }
-  },
-
-  mounted() {
-    if (this.header === this.criterion) {
-      this.isSorted = true
-      this.isArrowUp = this.direction === 'up'
+  computed: {
+    classArrow(): string {
+      if (this.header === this.criterion) {
+        return this.direction === 'up' ? 'sheet-header--arrow-up': ''
+      }
+      return 'sheet-header--arrow-hidden'
     }
   }
-
 })
 </script>
