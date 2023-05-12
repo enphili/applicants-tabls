@@ -16,4 +16,4 @@ npm run build
 ```
 
 ### Demo (deploy)
-See [Watch the application work in live mode](https://enphili.github.io/test-task-applicants-tabls/).
+See [Watch the application work in live mode](https://renovation.webfldev.ru/?direction=down&criterion=total).
