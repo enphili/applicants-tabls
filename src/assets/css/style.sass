@@ -113,6 +113,7 @@ body
     border-color: $accent
 .sheet
   position: relative
+  min-height: 150px
   overflow-x: scroll
   scrollbar-width: thin
   scrollbar-color: $blue-light transparent
@@ -197,12 +198,14 @@ body
     line-height: 15px
     color: $accent
     &--arrow-up
-      transform: rotate(180deg)
+      & svg
+        transform: rotate(180deg)
     &--arrow-hidden
       & svg
         display: none
     & > div
       @include flex-ali-cent
+      user-select: none
       cursor: pointer
       transition: $transition
       & > div

@@ -8,10 +8,22 @@ export interface IStudent {
   id: number,
   name: string,
   date: string,
-  subjects: ISubject[]
+  subjects: ISubject[],
+  total: number,
+  percent: number
 }
 
-export interface ISelectData {
-  id: number | string,
-  value: string
+export enum ETableHeaders {
+  name = 'ФИО',
+  date = 'Дата подачи заявления',
+  rusScore = 'Балл по русскому',
+  mathScore = 'Балл по математике',
+  informScore = 'Балл по информатике',
+  total = 'Суммарный балл',
+  percent = 'Процент'
+}
+
+export type TSelectData = {
+  id: string,
+  text: string
 }

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {IStudent, ISubject} from '@/model/types'
+import {useArrayContains} from '@/use/arrayContains'
+import {useTotalScore} from '@/use/totalScore'
 // если грузить не с сервера
 // import mockData from '@/use/mockData.json'
 
@@ -8,38 +10,66 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    studentsList: []
+    studentsList: [],
+    maxTotalScore: 15,
+    toastsArray: [] as {icon: string, text: string, timeOut: number }[]
   },
   
   getters: {
     studentsList(state): IStudent[] {
       return state.studentsList.sort()
+    },
+    
+    toastsArray(state) {
+      return state.toastsArray
     }
   },
   
   mutations: {
     studentsList(state, payload) {
       payload.map((el: IStudent) => {
-        // преобразуем дату в привычный нам формат
-        el.date = el.date ? new Date(el.date).toLocaleDateString() : 'дата не указана'
-        el.subjects?.map((sub: ISubject) => {
+        // на случай если дата отсутсвует в исходном объекте
+        if (!el.date) el.date = '1970-01-02'
+        
+        // на случай если в объекте "студент" нет массива предметов
+        if (!el.subjects) el.subjects = []
+
+        // на случай если в массиве предметов нет какого либо предмета из числа по умолчанию
+        useArrayContains(el.subjects, ['Русский язык', 'Математика', 'Информатика'])
+
+        const scoreArray: number[] = el.subjects?.map((sub: ISubject) => {
           // преобразуем оценки в числа
           sub.score = Number(sub.score)
-          // добавим в исходный объект идентификатор предмета
+          // добавим в массив предметов идентификатор предмета
           const fistChar: string = sub.subject.charAt(0).toLowerCase()
           let subIndex = -1
           if(fistChar === 'р') subIndex = 0
           if(fistChar === 'м') subIndex = 1
           if(fistChar === 'и') subIndex = 2
           sub.subIndex = subIndex
-          //FIXME продумать как поступить если нет какого либо предмета из числа по умолчанию
+          return sub.score
         })
+
         // отсортируем массив предметов чтобы он всегда был в одном порядке
         el.subjects?.sort((a, b) => a.subIndex - b.subIndex)
+        
+        // добавим в объект "студент" суммарный балл
+        el.total = scoreArray ? useTotalScore(...scoreArray) : 0
+        
+        // добавим в объект "студент" процент суммарного балла
+        el.percent = Math.round(el.total * 100 / state.maxTotalScore)
       })
+      
       // отсортируем данные с сервера по ФИО
       payload.sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name))
+      
+      // мутируем state
       state.studentsList = payload
+    },
+    
+    toastsArray(state, payload) {
+      state.toastsArray.push(payload)
+      setTimeout(() => state.toastsArray.shift(), payload.timeOut)
     }
   },
   

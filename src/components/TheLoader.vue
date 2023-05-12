@@ -12,9 +12,10 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: "TheLoader"
+  name: 'TheLoader'
 })
 </script>
+
 <style scoped lang="sass">
 .loader-wrap
   position: absolute

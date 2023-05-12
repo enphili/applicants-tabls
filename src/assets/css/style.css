@@ -344,6 +344,7 @@ body {
 
 .sheet {
   position: relative;
+  min-height: 150px;
   overflow-x: scroll;
   scrollbar-width: thin;
   scrollbar-color: #D5E7FF transparent;
@@ -455,7 +456,7 @@ body {
   line-height: 15px;
   color: #006CFE;
 }
-.sheet-header--arrow-up {
+.sheet-header--arrow-up svg {
   transform: rotate(180deg);
 }
 .sheet-header--arrow-hidden svg {
@@ -464,6 +465,7 @@ body {
 .sheet-header > div {
   display: flex;
   align-items: center;
+  user-select: none;
   cursor: pointer;
   transition: all 0.3s ease;
 }

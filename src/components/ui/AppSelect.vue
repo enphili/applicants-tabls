@@ -15,13 +15,13 @@
     <div class="select__dropdown">
       <ul class="select__list">
         <li
-          v-for="item in data"
-          :key="item.id"
-          :class="['select__item', {'selected': item.id === selectId}]"
-          :data-id="item.id"
-          @click="select(item)"
+          v-for="(value, index) in selectData"
+          :key="value.id"
+          :class="['select__item', {'selected': index === selectId}]"
+          :data-id="value"
+          @click="select(value, index)"
           v-model="selectValue"
-        >{{ item.value }}</li>
+        >{{ value.text }}</li>
       </ul>
     </div>
   </div>
@@ -29,10 +29,10 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from 'vue'
-import {ISelectData} from '@/model/types'
+import {TSelectData} from '@/model/types'
 
 export default defineComponent({
-  name: "AppSelect",
+  name: 'AppSelect',
 
   props: {
     placeholder: {
@@ -40,23 +40,23 @@ export default defineComponent({
       required: false,
       default: 'Выбрать значение'
     },
-    data: {
-      type: Array as PropType<ISelectData[]>,
-      required: true,
-    }
+    selectData: {
+      type: Array as PropType<TSelectData[]>,
+      required: true
+    },
   },
 
   data(): {
-    selectValue: null | ISelectData,
     isOpen: boolean,
-    selectId: number | string,
+    selectId: number,
+    selectValue: string,
     selectText: string
   }
   {
     return {
       isOpen: false,
-      selectValue: null,
-      selectId: 0,
+      selectId: -1,
+      selectValue: '',
       selectText: ''
     }
   },
@@ -70,13 +70,18 @@ export default defineComponent({
       this.isOpen = false
     },
 
-    select(item: ISelectData) {
-      this.selectValue = item
+    select(value: TSelectData, index: number) {
+      this.selectValue = value.id
       this.isOpen = false
-      this.selectId = item.id
-      this.selectText = item.value
-      console.log('Выбрано значение:', this.selectValue.value)
+      this.selectId = index
+      this.selectText = value.text
+      this.$emit('select-choose', this.selectValue)
     }
+  },
+
+  mounted() {
+    this.selectValue = typeof this.$route.query.criterion === 'string' ? this.$route.query.criterion : ''
+    this.selectText = this.selectData.find(el => el.id === this.selectValue)?.text ?? ''
   }
 })
 </script>

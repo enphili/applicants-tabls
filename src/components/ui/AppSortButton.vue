@@ -14,7 +14,7 @@
 import {defineComponent} from 'vue'
 
 export default defineComponent({
-  name: "AppSortButton",
+  name: 'AppSortButton',
 
   props: {
     direction: {
